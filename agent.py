@@ -138,5 +138,5 @@ if __name__ == "__main__":
         "device_type": "cisco_xe",
         "port": 22,
     }
-    goal = "Investigate why GigabitEthernet2 might be having issues and propose a fix if you find one."
+    goal = "Check the status of all interfaces on this device and report any that are down or have issues."
     print(run_agent(goal, device))
