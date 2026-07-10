@@ -64,13 +64,3 @@ User goal ("why is Gi2 down?")
    python agent.py
    ```
 
-## Resume bullet (use once you've run this against the real sandbox)
-> **NetSentry — Network Diagnostics Agent** — Agentic AI | Network Automation | Tool Orchestration
-> Built a Netmiko-based ReAct agent that autonomously diagnoses live Cisco IOS-XE interface/config issues via read-only tool calling, reusing the Pydantic schema-validation and audit-logging guardrail pattern from the HR Assist agent; all proposed fixes require explicit human approval before any device change.
-
-## Possible extensions if you have extra time
-- Add a `get_logging_buffer` tool (`show logging`) to correlate interface
-  flaps with recent syslog events — closer to how a real NOC engineer works.
-- Add an LLM-as-judge evaluation step: after `propose_fix`, have a second
-  Claude call critique whether the diagnosis is actually supported by the
-  tool outputs gathered (a mini groundedness check).
