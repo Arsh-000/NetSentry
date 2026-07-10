@@ -1,15 +1,9 @@
 """
 agent.py — the ReAct loop: Reason -> Act (tool call) -> Observe -> repeat.
 
-Uses xAI's Grok API via the OpenAI-compatible client (xAI's own docs confirm
-their API mirrors the OpenAI/Anthropic tool-calling pattern — just point the
-OpenAI client at xAI's base_url and use an XAI_API_KEY).
+Uses Groq API via the OpenAI-compatible client.
 
-This is the same control-flow pattern as the manual agent in the prep guide
-(Part 8, Project 3) and conceptually identical to the HR Assist agent's tool
-orchestration, just pointed at network tools instead of HR tools.
-
-Guardrails implemented here (name these explicitly in the interview):
+Guardrails implemented here:
   1. MAX_ITERATIONS — hard stop, prevents infinite tool-call loops.
   2. Schema validation on every tool input via Pydantic (schemas.py).
   3. propose_fix never mutates the device — see tools.py docstring.
@@ -29,9 +23,7 @@ from tools import (
 )
 
 MAX_ITERATIONS = 8
-MODEL = "llama-3.3-70b-versatile"  # cheap, fast model well-suited to tool-calling agents;
-                        # check console.x.ai for the current cheapest model name
-                        # if this one is ever deprecated
+MODEL = "llama-3.3-70b-versatile"
 
 TOOL_SPECS = [
     {
@@ -140,12 +132,11 @@ def run_agent(user_goal: str, device_params: dict, client=None):
 
 if __name__ == "__main__":
     device = {
-        "host": os.environ.get("NET_DEVICE_HOST", "sandbox-iosxe-latest-1.cisco.com"),
-        "username": os.environ.get("NET_DEVICE_USER", "admin"),
+        "host": os.environ.get("NET_DEVICE_HOST", "devnetsandboxiosxec8k.cisco.com"),
+        "username": os.environ.get("NET_DEVICE_USER", "jokearns"),
         "password": os.environ.get("NET_DEVICE_PASS", "CHANGE_ME"),
-        "device_type": "cisco_ios",
+        "device_type": "cisco_xe",
         "port": 22,
     }
     goal = "Investigate why GigabitEthernet2 might be having issues and propose a fix if you find one."
     print(run_agent(goal, device))
-
